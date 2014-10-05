@@ -110,12 +110,15 @@ class ListParser(object):
         
         return apartments
 
+
+if __name__ == "__main__":
     
+    parser = ListParser("newyork")
 
-parser = ListParser("newyork")
+    apt_list = parser.get_list("brk","sub")
 
-apt_list = parser.get_list("brk","sub")
+    print json.dumps(apt_list)
 
-print json.dumps(apt_list)
+
 
     

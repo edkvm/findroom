@@ -1,8 +1,10 @@
 from flask import Flask, request, make_response, current_app
 import os
-
+import sqlite3
 from datetime import timedelta
 from functools import update_wrapper
+from api_lib import ListParser
+import json
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_folder='static', static_url_path='')
@@ -62,6 +64,14 @@ def list_apartments():
     
     return json_data
 
+@app.route('/api/list/<loc>/<sub_loc>/<section>', methods=['GET', 'OPTIONS'])
+@crossdomain(origin='*')
+def list(loc="newyork", sub_loc="brk",section="sub"):
+	parser = ListParser(loc)
+
+	apt_list = parser.get_list(sub_loc,section)
+
+	return json.dumps(apt_list)
 
 if __name__ == "__main__":
     app.debug = True
